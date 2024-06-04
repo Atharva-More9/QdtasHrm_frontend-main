@@ -1,0 +1,31 @@
+<div class="sidebar-container" [ngClass]="{ 'collapsed': isExpanded }">
+    <mat-nav-list class="sidebar">
+        <div class="logo py-4" [style.padding-bottom.px]="isExpanded ? 25 : 10">
+            <img src="./assets/images/logo.png" alt="Company Logo" />
+            <span matSubheader class="header mt-2" *ngIf="!isExpanded">QDTASHRM</span>
+        </div>
+        <mat-divider></mat-divider>
+
+  
+
+        <a mat-list-item routerLinkActive="list-item-active" routerLink="/profile" class="sidebar-link">
+            <mat-icon>home</mat-icon> <span class="ml-2">Admin</span>
+        </a>
+        <a mat-list-item routerLinkActive="list-item-active" routerLink="/leave" class="sidebar-link">
+            <mat-icon>calendar_today</mat-icon> <span class="ml-2">Leave</span>
+        </a>
+        <a mat-list-item routerLinkActive="list-item-active" routerLink="/time" class="sidebar-link">
+            <mat-icon>access_time</mat-icon> <span class="ml-2">Time</span>
+        </a>
+        <a mat-list-item routerLinkActive="list-item-active" routerLink="/myinfo" class="sidebar-link">
+            <mat-icon>info</mat-icon> <span class="ml-2">My Info</span>
+        </a>
+        <a mat-list-item routerLinkActive="list-item-active" routerLink="/project" class="sidebar-link">
+            <mat-icon>assessment</mat-icon> <span class="ml-2">Projects</span>
+        </a>
+       
+    </mat-nav-list>
+    <button class="toggle-button" (click)="toggleSidebar()">
+        <mat-icon>{{ isExpanded ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+    </button>
+</div>

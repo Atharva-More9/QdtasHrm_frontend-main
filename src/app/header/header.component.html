@@ -1,0 +1,17 @@
+<mat-toolbar class="maroon-theme">
+    <mat-toolbar-row class="justify-content-between">
+        <button mat-icon-button (click)="toggleSidebar()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <div class="toolbar-right">
+            <!-- Add an image to display -->
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <img src="./assets/images/pic.png" alt="Profile Image" style="width: 30px; height: 30px;">
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>Profile</button>
+                <button  mat-menu-item *ngIf="isLoggedIn()" class="btn" (click)="logout()">Logout</button>
+            </mat-menu>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

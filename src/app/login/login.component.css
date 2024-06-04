@@ -1,0 +1,287 @@
+body {
+    overflow: hidden;
+    /* Prevent scrolling */
+    margin: 0;
+    /* Remove default body margin */
+    padding: 0;
+    /* Remove default body padding */
+}
+
+.body {
+    position: fixed;
+    /* Fix the body container */
+    width: 100%;
+    /* Take full width of the viewport */
+    height: 100%;
+    /* Take full height of the viewport */
+}
+
+
+.login-form h2 {
+    font-family: 'League Spartan', sans-serif;
+    font-size: xx-large;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+
+
+.background {
+    position: fixed;
+    /* Fixed position to cover the entire viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: maroon;
+    z-index: -1;
+    clip-path: ellipse(15% 60% at 100% 50%);
+}
+
+
+/* CSS for container-title */
+.container-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 80px;
+    margin-top: 6%;
+    border-radius: 10px;
+}
+
+.container-title img {
+    max-width: 50px;
+    /* Adjust as needed */
+    height: auto;
+    margin-right: 20px;
+    /* Add some space between image and title */
+}
+
+.container-title h1 {
+    font-size: 30px;
+    margin-top: 10px;
+    color: maroon;
+    font-family: 'League Spartan', sans-serif;
+    font-weight: bold;
+
+
+}
+
+/* CSS for container-form */
+.container-form {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 320px;
+    margin-top: 1.5%;
+    padding: 20px;
+
+}
+
+.container-form div {
+    margin-bottom: 5px;
+}
+
+.container-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.container-form input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.btn-maroon {
+    background-color: maroon;
+    width: 100%;
+    margin-top: 5%;
+    color: white;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.container-form a {
+    color: maroon;
+    display: block;
+    margin-top: 3%;
+    text-align: center;
+    line-height: 100%;
+    height: 100%;
+
+}
+
+.container-form h2 {
+    color: maroon;
+    font-weight: bold;
+    text-align: center;
+    line-height: 100%;
+}
+
+.version {
+    white-space: pre-line;
+    text-align: center;
+    margin-top: 25%;
+    color: #A9A9A9;
+
+}
+
+.invalid {
+    border: 2px solid red;
+}
+
+.valid {
+    border: 2px solid green;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+}
+
+
+mat-progress-bar {
+    margin-top: 6%;
+}
+
+.label {
+    display: flex;
+
+
+}
+
+.label mat-icon {
+    margin-right: 10px;
+    color: maroon;
+    /* Adjust the spacing as needed */
+}
+
+
+
+.socials {
+    position: fixed;
+    bottom: 20px;
+    /* Adjust as needed */
+    left: 20px;
+    /* Adjust as needed */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.socials .btn i {
+    font-size: 24px;
+}
+
+
+
+
+@media only screen and (max-width: 767px) {
+    /* Styles for screens up to 767px wide */
+
+    .container-title {
+        width: 90%;
+        /* Adjust width for smaller screens */
+        margin-top: 10%;
+        /* Adjust top margin for centering */
+        box-shadow: none;
+        /* Remove box shadow */
+    }
+
+    .container-title img {
+        max-width: 30px;
+        /* Adjust image size for smaller screens */
+    }
+
+    .container-title h1 {
+        font-size: 24px;
+        /* Adjust font size for smaller screens */
+        margin-top: 5px;
+        /* Adjust top margin for smaller screens */
+    }
+
+    .login-form h2 {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .container-form {
+        width: 90%;
+        /* Adjust width for smaller screens */
+        margin-top: 5%;
+        /* Adjust top margin for centering */
+        height: auto;
+        /* Allow height to adjust based on content */
+    }
+
+    .container-form input {
+        width: calc(100% - 16px);
+        /* Adjust width to accommodate padding and border */
+
+        /* Adjust padding as needed */
+        box-sizing: border-box;
+        /* Ensure padding and border are included in the width */
+    }
+
+    .btn-maroon {
+        margin-top: 5%;
+        padding: 8px;
+        width: calc(100% - 16px);
+        /* Adjust button margin for centering */
+    }
+
+    .container-form a {
+        margin-top: 3%;
+        /* Adjust margin for anchor tag on smaller screens */
+    }
+
+    .version {
+        margin-top: 15%;
+        /* Adjust margin for version text on smaller screens */
+    }
+
+    .background {
+        display: none;
+        /* Hide the background for smaller screens */
+    }
+}
+
+.alert {
+    padding: 10px;
+    background-color: #eda7a1;
+    /* Red */
+    border-color: #f44336;
+    color: black;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+    color: black;
+}

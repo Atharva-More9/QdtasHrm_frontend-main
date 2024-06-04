@@ -1,0 +1,27 @@
+<div class="container-fluid g-0">
+    <app-header> </app-header>
+
+    <main>
+        <app-sidenav (toggle)="onToggleSidebar($event)"></app-sidenav>
+
+        <div class="display-area" [ngClass]="{'expanded': isSidebarExpanded, 'collapsed': !isSidebarExpanded}">
+            <app-add-user></app-add-user>
+
+        </div>
+
+    </main>
+</div>
+
+
+
+<!-- <div class="container-fluid g-0">
+    <app-header (sideNavToggled)="sideNavStatus = $event;"> </app-header>
+
+    <main>
+        <app-sidenav [sideNavStatus]="sideNavStatus" [ngClass]="{'app-sidenav-open': sideNavStatus}"> </app-sidenav>
+
+        <div class="display-area" [ngClass]="{'display-area-shrink': sideNavStatus}">
+            <app-add-user> </app-add-user>
+        </div>
+    </main>
+</div> -->

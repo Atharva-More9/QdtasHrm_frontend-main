@@ -1,0 +1,93 @@
+
+<div *ngIf="isLoading">Loading....</div>
+
+<div *ngIf="!isLoading" class="container mt-4">
+  <form class="edit-form" #editForm="ngForm" (submit)="updateProject(editForm.value)">
+    <div class="inp-row">
+      <h2 class="title mb-3 text-center">Edit Project</h2>
+
+      <div class="inp-field mb-3">
+        <div class="inp">
+          <label class="form-label">Project Name</label>
+          <input type="text" class="form-control" id="projectName" placeholder="Project name" ngModel name="projectName"
+                 #projectName="ngModel" required>
+          <div *ngIf="projectName.invalid && (projectName.dirty || projectName.touched)" class="error-message">
+            <span *ngIf="projectName.errors?.['required']">Project Name is required.</span>
+          </div>
+        </div>
+
+        <div class="inp">
+          <label class="form-label">Client</label>
+          <input type="text" class="form-control" id="client" placeholder="Client Name" ngModel name="client" required
+                 #client="ngModel">
+          <div *ngIf="client.invalid && (client.dirty || client.touched)" class="error-message">
+            <span *ngIf="client.errors?.['required']">Client Name is required.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="inp-field mb-3">
+        <div class="inp">
+          <label class="form-label">Description</label>
+          <input type="text" class="form-control" id="description" placeholder="Description" ngModel
+                 name="description" required #description="ngModel">
+          <div *ngIf="description.invalid && (description.dirty || description.touched)"
+               class="error-message">
+            <span *ngIf="description.errors?.['required']">Description is required.</span>
+          </div>
+        </div>
+
+        <div class="inp">
+          <label class="form-label">Teams</label>
+          <input type="text" class="form-control" id="teams" placeholder="Teams" ngModel
+                 name="teams" required #teams="ngModel">
+          <div *ngIf="teams.invalid && (teams.dirty || teams.touched)"
+               class="error-message">
+            <span *ngIf="teams.errors?.['required']">Teams are required.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="inp-field mb-3">
+        <div class="inp">
+          <label class="form-label">Managers</label>
+          <input type="text" class="form-control" id="managers" placeholder="Managers" ngModel
+                 name="managers" required #managers="ngModel">
+          <div *ngIf="managers.invalid && (managers.dirty || managers.touched)"
+               class="error-message">
+            <span *ngIf="managers.errors?.['required']">Managers are required.</span>
+          </div>
+        </div>
+
+        <div class="inp">
+          <label class="form-label">Status</label>
+          <input type="text" class="form-control" id="status" placeholder="Status" ngModel name="status"
+                 required #status="ngModel">
+          <div *ngIf="status.invalid && (status.dirty || status.touched)"
+               class="error-message">
+            <span *ngIf="status.errors?.['required']">Status is required.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="inp-field mb-3">
+        <div class="inp">
+          <label class="form-label">Type</label>
+          <input type="text" class="form-control" id="type" placeholder="Type" ngModel name="type"
+                 required #type="ngModel">
+          <div *ngIf="type.invalid && (type.dirty || type.touched)"
+               class="error-message">
+            <span *ngIf="type.errors?.['required']">Type is required.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more input fields here -->
+
+      <div class="text-end suv-btn">
+        <button class="btn btn-maroon" type="submit">Update</button>
+        <button class="btn btn-cancel" type="button" (click)="cancel()">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

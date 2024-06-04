@@ -1,0 +1,55 @@
+.container-fluid {
+    overflow: hidden;
+}
+
+.app-header {
+    z-index: -1;
+}
+
+.display-area {
+    /* border: 1px solid black; */
+    overflow: hidden;
+    /* Prevent scrolling */
+    transition: margin 0.3s ease;
+    /* Optional: Add transition for smooth animation */
+}
+
+.expanded {
+    margin-left: 80px;
+    margin-right: 20px;
+    /* Adjust based on your sidebar width */
+}
+
+.collapsed {
+    margin-left: 270px;
+    margin-right: 20px;
+    /* Adjust based on your collapsed sidebar width */
+}
+
+
+
+
+/* Adjust the form layout for mobile devices */
+@media (max-width: 767px) {
+
+.expanded {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    .collapsed {
+        margin-left: 70px;
+        margin-right: 50px;
+    }
+
+
+}
+
+/* Additional styles for landscape orientation */
+@media (max-width: 767px),
+(orientation: landscape) {
+
+
+
+}
+

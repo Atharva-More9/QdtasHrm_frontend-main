@@ -1,0 +1,271 @@
+<div class="container-fluid g-0">
+    <app-header> </app-header>
+
+    <main>
+        <app-sidenav (toggle)="onToggleSidebar($event)"></app-sidenav>
+
+        <div class="display-area" [ngClass]="{'expanded': isSidebarExpanded, 'collapsed': !isSidebarExpanded}">
+            <div *ngIf="successMessage" class="success-message">
+                {{ successMessage }}
+                <mat-icon class="close-icon" (click)="dismissSuccessMessage()">close</mat-icon>
+            </div>
+            
+            <div *ngIf="errorMessage" class="error-message-notification">
+                {{ errorMessage }}
+                <mat-icon class="close-icon" (click)="dismissErrorMessage()">close</mat-icon>
+            </div>
+            <div class="card">
+                <div class="container p-2">
+                    <div *ngIf="isLoading" class="loading-bar">
+                        <div class="spinner-container">
+                            <mat-progress-bar mode="indeterminate" color="warn"></mat-progress-bar>
+                        </div>
+                    </div>
+                    <form class="timesheetform" #timeSheetForm="ngForm" (submit)="applyTimeSheet(timeSheetForm.value)">
+                        <div class="inp-row">
+                            <div *ngIf="u">
+                                <h2 class="title mb-3">TimeSheet for: {{u.firstName + ' ' + u.lastName}} </h2>
+                            </div>
+                            <input type="hidden" ngModel name="employeeId">
+                            <div class="inp-field">
+                             <div class="inp">
+                            <label class="form-label">Start Time</label>
+                            <input type="time"  class="form-control" id="startTime" name="startTime" [(ngModel)]="startTime"
+                                #startTimeInput="ngModel"  required>
+                            <div *ngIf="startTimeInput.invalid && (startTimeInput.dirty || startTimeInput.touched)" class="error-message">
+                                <span *ngIf="startTimeInput.errors?.['required']">Start Time is required</span>
+                            </div>
+                        </div>
+                        
+                        <div class="inp">
+                            <label class="form-label">End Time</label>
+                            <input type="time"  class="form-control" id="endTime" name="endTime" [(ngModel)]="endTime"
+                                #endTimeInput="ngModel" [min]="startTime" (change)="updateTimeConstraints()" required>
+                            <div *ngIf="endTimeInput.invalid && (endTimeInput.dirty || endTimeInput.touched)" class="error-message">
+                                <span *ngIf="endTimeInput.errors?.['required']">End Time is required</span>
+                                <span *ngIf="startTime === endTime && startTime !== ''">End Time must be after Start Time</span>
+                            </div>
+                        </div>
+                            </div>
+
+
+
+                            <div class="inp-field">
+                                <div class="inp">
+                                    <mat-form-field class="inp-date">
+                                        <input matInput [matDatepicker]="startPicker" [max]="minDate" [min]="maxDate"  
+                                            [(ngModel)]="startDate" name="date" id="sDate"
+                                            placeholder="Choose Date" #date="ngModel" required>
+                                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #startPicker></mat-datepicker>
+                                        <mat-error class="error-message"
+                                            *ngIf="date.invalid && (date.dirty || date.touched)">
+                                            <span *ngIf="date.errors?.['required']">Please select Date</span>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="inp">
+                                    <label class="form-label">Project</label>
+                                    <select class="form-select" id="project" name="projectId" ngModel required
+                                        #projectId="ngModel" [ngClass]="{'invalid': projectId.invalid && (projectId.dirty || projectId.touched), 'valid': projectId.valid && (projectId.dirty ||
+                                                            projectId.touched)}">
+                                        <option selected [disabled]="true">Select project</option>
+                                        <option value=1>HRM</option>
+                                        <option value=2>HomeLyf </option>
+                                    </select>
+                                    <div *ngIf="projectId.invalid && (projectId.dirty || projectId.touched)"
+                                        class="error-message">
+                                        <span *ngIf="projectId.errors?.['required']">Please select projectId</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="inp">
+                                <label class="form-label">Note</label>
+                                <textarea class="form-control" id="note" placeholder="Today's Task" ngModel
+                                    name="note" required  #note="ngModel" [ngClass]="{'invalid': note.invalid && (note.dirty || note.touched), 
+                                     'valid': note.valid && (note.dirty || note.touched)}"
+                                    pattern="[^\s].*"> </textarea>
+                                    <div *ngIf="note.invalid && (note.dirty || note.touched)" class="error-message">
+                                        <span *ngIf="note.errors?.['required']">Note is required</span>
+                                        <span *ngIf="note.errors?.['pattern']">Note must not be blank</span>
+                                    </div>
+                            </div>
+
+                            <div>
+                                <div class="col text-end suv-btn">
+                                    <button class="btn btn-maroon" type="reset">Reset</button>
+                                    <button class="btn btn-maroon" type="submit"   [disabled]="!timeSheetForm.valid">Submit</button>
+                                </div>
+                            </div>
+
+                            
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="container p-2">
+                    <form>
+                        <input type="text" *ngIf="isLoggedIn?.role !== 'ROLE_USER'"  id="myInput" placeholder="Search.." (keyup)="FilterChange($event)" />
+                        <!-- <div class="table-container">
+                            <table class="table" id="myTable">
+                                <tr class="header">
+                                    <th style="width:15%;">User-ID</th>
+                                    <th style="width:15%;">First name</th>
+                                    <th style="width:20%;">Last name</th>
+                                    <th style="width:15%;">Department</th>
+                                    <th style="width:15%;">Designation</th>
+                                    <th style="width:10%;">View</th>
+                                </tr>
+
+                                <tr *ngFor="let user of users | filter : searchTerm">
+                                    <td>{{ user.userId }}</td>
+                                    <td>{{ user.firstName }}</td>
+                                    <td>{{ user.lastName }}</td>
+                                    <td>{{ user.dept?.deptName }}</td>
+                                    <td>{{ user.designation }}</td>
+                                    <td>
+                                        <div class="icon-container">
+                                            <button mat-button (click)="navigateToTs(user.userId)">View</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div> -->
+
+
+                        <div class="table-container"   *ngIf="isLoggedIn?.role !== 'ROLE_USER'"  >
+                            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 ">
+
+
+                                <ng-container matColumnDef="userId">
+                                    <tr>
+                                        <th mat-header-cell *matHeaderCellDef class="center"> User-ID </th>
+                                        <td mat-cell *matCellDef="let user" class="center"> {{user.userId}} </td>
+                                    </tr>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="firstName">
+                                    <th mat-header-cell *matHeaderCellDef class="center"> First name </th>
+                                    <td mat-cell *matCellDef="let user" class="center"> {{user.firstName}} </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="lastName">
+                                    <th mat-header-cell *matHeaderCellDef class="center"> Last name </th>
+                                    <td mat-cell *matCellDef="let user" class="center"> {{user.lastName}} </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="deptId">
+                                    <th mat-header-cell *matHeaderCellDef class="center"> Department </th>
+                                    <td mat-cell *matCellDef="let user" class="center"> {{user.dept?.deptName}} </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="designation">
+                                    <th mat-header-cell *matHeaderCellDef class="center"> designation </th>
+                                    <td mat-cell *matCellDef="let user" class="center"> {{user.designation}} </td>
+                                </ng-container>
+
+
+
+                                <ng-container matColumnDef="view">
+                                    <th mat-header-cell *matHeaderCellDef class="center"> View </th>
+                                    <td mat-cell *matCellDef="let user">
+                                        <div class="icon-container">
+                                            <button mat-button (click)="navigateToTs(user.userId)">View</button>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                        </div>
+
+
+                        <div *ngIf="isLoading" class="loading-bar" >
+                            <div class="spinner-container" *ngIf="isLoggedIn?.role !== 'ROLE_USER'" >
+                                <mat-progress-bar mode="indeterminate" color="warn"></mat-progress-bar>
+                            </div>
+                        </div>
+
+                        <div class="load-button" *ngIf="isLoggedIn?.role !== 'ROLE_USER'">
+                            <button (click)="loadMoreUsers()" *ngIf="hasMoreResult" mat-raised-button color="primary"
+                                style="background-color: maroon;" class="rounded-pill align-middle text-center">
+                                Load More
+                            </button>
+                        </div>
+
+
+                        <!-- new table -->
+
+
+                        <div class="table-container"  *ngIf="isLoggedIn?.role !== 'ROLE_ADMIN'" >
+                            <table mat-table [dataSource]="dataSourceForUser" class="mat-elevation-z8 ">
+                        
+                        
+                                <ng-container matColumnDef="date">
+                                    <tr>
+                                        <th mat-header-cell *matHeaderCellDef class="center"> Date </th>
+                                        <td mat-cell *matCellDef="let t" class="center"> {{t.date}} </td>
+                                    </tr>
+                                </ng-container>
+                        
+                        
+                                <ng-container matColumnDef="startTime">
+                                    <th mat-header-cell *matHeaderCellDef class="center"> Start TIme </th>
+                                    <td mat-cell *matCellDef="let t" class="center"> {{t.startTime}} </td>
+                                </ng-container>
+                        
+                        
+                                <ng-container matColumnDef="endTime">
+                                    <th mat-header-cell *matHeaderCellDef class="center"> End Time </th>
+                                    <td mat-cell *matCellDef="let t" class="center"> {{t.endTime}} </td>
+                                </ng-container>
+                        
+                        
+                                <ng-container matColumnDef="note">
+                                    <th mat-header-cell *matHeaderCellDef class="center"> Note </th>
+                                    <td mat-cell *matCellDef="let t" class="center"> {{t.note}} </td>
+                                </ng-container>
+                        
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumnsForUser"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumnsForUser;"></tr>
+                            </table>
+                        </div>
+                        
+                        
+                        <div *ngIf="isLoading" class="loading-bar">
+                            <div class="spinner-container"  *ngIf="isLoggedIn?.role !== 'ROLE_ADMIN'" >
+                                <mat-progress-bar mode="indeterminate" color="warn"></mat-progress-bar>
+                            </div>
+                        </div>
+
+                        
+                        
+                        <div class="load-button"  *ngIf="isLoggedIn?.role !== 'ROLE_ADMIN'" >
+                            <button (click)="loadMoreTimeSheet()" *ngIf="hasMoreResult" mat-raised-button color="primary"
+                                style="background-color: maroon;" class="rounded-pill align-middle text-center">
+                                Load More
+                            </button>
+                        </div>
+                        
+                        <!-- new table -->
+                        
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

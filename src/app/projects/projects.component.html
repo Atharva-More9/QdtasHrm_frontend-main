@@ -1,0 +1,222 @@
+<div class="container-fluid g-0">
+    <app-header> </app-header>
+
+    <main>
+        <app-sidenav (toggle)="onToggleSidebar($event)"></app-sidenav>
+
+        <div class="display-area" [ngClass]="{'expanded': isSidebarExpanded, 'collapsed': !isSidebarExpanded}">
+
+            <div *ngIf="successMessage" class="success-message">
+                {{ successMessage }}
+                <mat-icon class="close-icon" (click)="dismissSuccessMessage()">close</mat-icon>
+            </div>
+
+            <div *ngIf="errorMessage" class="error-message-notification">
+                {{ errorMessage }}
+                <mat-icon class="close-icon" (click)="dismissErrorMessage()">close</mat-icon>
+            </div>
+
+            <div class="projects">
+
+                <div class="card" >
+                    <div class="container p-2">
+                        <form class="projectfrom" #projectFrom="ngForm" (submit)="addProjectData(projectFrom.value)" >
+                            <div class="inp-row">
+                                <h2 class="title mb-3">Projects</h2>
+                                <div class="inp-field">
+                                       <div class="inp">
+                                        <label class="form-label">Project Name</label>
+                                        <input type="text" class="form-control" id="projectName" placeholder="Project name" ngModel name="projectName"
+                                            #projectName="ngModel" required
+                                            [ngClass]="{'invalid': projectName.invalid && (projectName.dirty || projectName.touched), 'valid': projectName.valid && (projectName.dirty || projectName.touched)}">
+                                        <div *ngIf="projectName.invalid && (projectName.dirty || projectName.touched)" class="error-message">
+                                            <span *ngIf="projectName.errors?.['required']">projectName is required.</span>
+                                            <span *ngIf="projectName.errors?.['pattern']">projectName must contain @ and . symbols.</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="inp">
+                                        <label class="form-label">Client</label>
+                                        <input type="text" class="form-control" id="client" placeholder="Client Name" ngModel name="client" required
+                                            #client="ngModel" [ngClass]="{'invalid': client.invalid && (client.dirty || client.touched), 'valid': client.valid && (client.dirty ||
+                                                                                client.touched)}">
+                                        <div *ngIf="client.invalid && (client.dirty || client.touched)" class="error-message">
+                                            <span *ngIf="client.errors?.['required']">Please enter middle name</span>
+                                            <span *ngIf="client.errors?.['pattern']">Please enter only alphabets</span>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="inp-field">
+                                    <div class="inp">
+                                        <label class="form-label">Description</label>
+                                        <input type="text" class="form-control" id="description" placeholder="Description" ngModel
+                                            name="description" required #description="ngModel"  [ngClass]="{'invalid': description.invalid && (description.dirty || description.touched), 'valid': description.valid && (description.dirty ||
+                                            description.touched)}">
+                                        <div *ngIf="description.invalid && (description.dirty || description.touched)"
+                                            class="error-message">
+                                            <span *ngIf="description.errors?.['required']">Please enter first name</span>
+                                            <span *ngIf="description.errors?.['pattern']">Please enter only alphabets</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="inp">
+                                        <label class="form-label">Teams</label>
+                                        <ng-multiselect-dropdown [(ngModel)]="selectedTeams" [placeholder]="'Select Teams'" [data]="fullName"
+                                            [settings]="dropdownSettings" name="teams" required #teams="ngModel">
+
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="teams.invalid && (teams.dirty || teams.touched)" class="error-message">
+                                            <span *ngIf="teams.errors?.['required']">Select Team members</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="inp-field">
+                                        <div class="inp">
+                                            <label class="form-label">Managers</label>
+                                            <ng-multiselect-dropdown [(ngModel)]="selectedManagers" [placeholder]="'Select Managers'" [data]="fullName"
+                                                [settings]="dropdownSettingsForManagers" name="managers" required #managers="ngModel">
+
+                                            </ng-multiselect-dropdown>
+                                            <div *ngIf="managers.invalid && (managers.dirty || managers.touched)" class="error-message">
+                                                <span *ngIf="managers.errors?.['required']">Select Managers</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="inp">
+                                            <label class="form-label">Status</label>
+                                            <input type="text" class="form-control" id="status" placeholder="Status" ngModel name="status"
+                                                required #status="ngModel" [ngClass]="{'invalid': status.invalid && (status.dirty || status.touched), 'valid': status.valid && (status.dirty ||
+                                                                                    status.touched)}">
+                                            <div *ngIf="status.invalid && (status.dirty || status.touched)" class="error-message">
+                                                <span *ngIf="status.errors?.['required']">Please enter first name</span>
+                                                <span *ngIf="status.errors?.['pattern']">Please enter only alphabets</span>
+                                            </div>
+                                        </div>
+                                </div>
+
+
+
+                                <div class="inp-field">
+                                   <div class="inp">
+                                        <label class="form-label">Type</label>
+                                        <input type="text" class="form-control" id="type" placeholder="Type" ngModel name="type"
+                                            required #type="ngModel" [ngClass]="{'invalid': type.invalid && (type.dirty || type.touched), 'valid': type.valid && (type.dirty ||
+                                                                                                                    type.touched)}">
+                                        <div *ngIf="type.invalid && (type.dirty || type.touched)" class="error-message">
+                                            <span *ngIf="type.errors?.['required']">Please enter first name</span>
+                                            <span *ngIf="type.errors?.['pattern']">Please enter only alphabets</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <div class="col text-end suv-btn">
+                                        <button class="btn btn-maroon" id="sub" type="submit">Submit</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="container p-2">
+                        <form>
+
+                          <div class="table-container">
+                            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 ">
+                              <ng-container matColumnDef="projectId">
+                                <th mat-header-cell *matHeaderCellDef class="center"> Project-Id </th>
+                                <td mat-cell *matCellDef="let p" class="center"> {{p.projectId}} </td>
+                              </ng-container>
+
+                                    <ng-container matColumnDef="projectName">
+                                        <tr>
+                                            <th mat-header-cell *matHeaderCellDef class="center"> Project Name </th>
+                                            <td mat-cell *matCellDef="let p" class="center"> {{p.projectName}} </td>
+                                        </tr>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="client">
+                                        <th mat-header-cell *matHeaderCellDef class="center"> Client Name </th>
+                                        <td mat-cell *matCellDef="let p" class="center"> {{p.client}} </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="teams">
+                                        <th mat-header-cell *matHeaderCellDef class="center"> Teams </th>
+                                        <td mat-cell *matCellDef="let p" class="center">
+                                            <div class="icon-container">
+                                              <button mat-button (click)="ViewTeams(p.id)">View</button>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="managers">
+                                        <th mat-header-cell *matHeaderCellDef class="center"> Manager </th>
+                                        <td mat-cell *matCellDef="let p" class="center">
+                                        <div class="icon-container">
+                                          <button mat-button (click)="ViewManagers(p.projectId)">View</button>
+
+                                        </div> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="status">
+                                        <th mat-header-cell *matHeaderCellDef class="center"> Status </th>
+                                        <td mat-cell *matCellDef="let p" class="center"> {{p.status}} </td>
+                                    </ng-container>
+
+                                  <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef class="center">Actions</th>
+                                    <td mat-cell *matCellDef="let p" class="center">
+                                      <div class="icon-container">
+                                        <i class="fa-solid fa-pen-to-square" id="edit" (click)="editProject(p.projectId)"></i>
+                                        <span class="icon-space"></span>
+                                        <i class="fa-solid fa-trash-can" (click)="deleteProject(p.projectId)"></i>
+                                      </div>
+                                    </td>
+                                  </ng-container>
+
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns "></tr>
+                                </table>
+                            </div>
+                            <div *ngIf="isLoading" class="loading-bar">
+                                <div class="spinner-container">
+                                    <mat-progress-bar mode="indeterminate" color="warn"></mat-progress-bar>
+                                </div>
+                            </div>
+
+                            <div *ngIf="noResultMessage" class="no-data-found">
+                                <h3>{{noResultMessage}}</h3>
+                            </div>
+
+                            <div class="load-button">
+                                <button (click)="loadMoreProjects()" *ngIf="hasMoreResult" mat-raised-button color="primary"
+                                    style="background-color: maroon;" class="rounded-pill align-middle text-center">
+                                    Load More
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </main>
+</div>
+
+
+
