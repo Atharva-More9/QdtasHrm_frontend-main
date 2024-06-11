@@ -193,8 +193,11 @@ export class UserService {
   }
 
   updateProject(projectId: number, project: Project): Observable<Project> {
-    const url = BASE_API_URL +`/project/update/${projectId}`;
-    return this.http.post<Project>(url, project,{headers:this.getHeaders()}).pipe(
+    // Construct the URL for the update endpoint
+    const url = BASE_API_URL + `/project/update/${projectId}`;
+
+    // Send a PUT request to update the project with the provided project data
+    return this.http.put<Project>(url, project, { headers: this.getHeaders() }).pipe(
       catchError((error: any) => {
         // Handle error
         console.error('Error updating project:', error);
@@ -202,6 +205,7 @@ export class UserService {
       })
     );
   }
+
 
   deleteProject(projectId: number): Observable<any> {
     return this.http.delete(BASE_API_URL + `/project/delete/${projectId}`);

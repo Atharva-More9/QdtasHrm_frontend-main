@@ -125,8 +125,20 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.userService.getAllProjects(currentPage, resultSize).subscribe(
         (projects: Project[]) => {
-          this.projects.push(...projects);
+          // Replace existing projects with updated projects
+          projects.forEach(updatedProject => {
+            const existingProjectIndex = this.projects.findIndex(project => project.projectId === updatedProject.projectId);
+            if (existingProjectIndex !== -1) {
+              this.projects[existingProjectIndex] = updatedProject;
+            } else {
+              // If the updated project doesn't exist in the list, add it
+              this.projects.push(updatedProject);
+            }
+          });
+
+          // Update the data source
           this.dataSource.data = this.projects;
+
           this.isLoading = false;
           if (this.projects.length === 0 && this.resultPage === 1) {
             this.hasMoreResult = false;
@@ -142,6 +154,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       )
     );
   }
+
 
   loadMoreProjects(): void {
     this.isLoading = true;

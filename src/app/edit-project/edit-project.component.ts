@@ -1,10 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../service/userServices'; // Update the path to your project service
+import { UserService } from '../service/userServices';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Project } from '../model/project'; // Import the Project model
-import { ElementRef } from '@angular/core';
-
+import { Project } from '../model/project';
 
 @Component({
   selector: 'app-edit-project',
@@ -15,70 +13,84 @@ export class EditProjectComponent implements OnInit {
   @Input() projectId: number;
   projectForm!: FormGroup;
   project: Project = new Project();
-  isLoading :boolean = false;
+  isLoading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private formBuilder: FormBuilder,
-    private elementRef: ElementRef
+    private formBuilder: FormBuilder
   ) {
-    this.projectId = parseInt(route.snapshot.paramMap.get('projectId')!);
+    this.projectId = parseInt(this.route.snapshot.paramMap.get('projectId')!, 10);
   }
 
   ngOnInit(): void {
-    this.loadProjectDetails();
+    console.log('ngOnInit called');
     this.initForm();
+    this.loadProjectDetails();
     this.scrollToTop();
   }
 
-  loadProjectDetails(): void {
-    this.isLoading=true;
-    this.userService.getProjectById(this.projectId).subscribe(
-      (project: any) => {
-      this.project = project; // Store the project details
-      // Pre-fill the form fields with existing project details
-      this.projectForm.patchValue({
-        projectName: project.projectName,
-        client: project.client,
-        description: project.description,
-        status: project.status,
-        type: project.type
-      });
-        this.isLoading=false;
-      },error => {
-        this.isLoading=false;
-      }
-    );
-  }
-
   initForm(): void {
+    console.log('Initializing form');
     this.projectForm = this.formBuilder.group({
       projectName: ['', Validators.required],
       client: ['', Validators.required],
       description: ['', Validators.required],
+      teams: ['', Validators.required],
+      managers: ['', Validators.required],
       status: ['', Validators.required],
       type: ['', Validators.required]
     });
   }
 
-  updateProject(value:any): void {
+  loadProjectDetails(): void {
+    this.isLoading = true;
+    console.log('Loading project details...');
+    this.userService.getProjectById(this.projectId).subscribe(
+      (project: Project) => {
+        console.log('Project loaded:', project);
+        this.project = project; // Store the project details
+        this.projectForm.patchValue(project); // Pre-fill the form fields with existing project details
+        this.isLoading = false;
+      },
+      error => {
+        console.error('Error loading project details', error);
+        this.isLoading = false;
+      }
+    );
+  }
+
+  updateProject(): void {
     if (this.projectForm.valid) {
       const updatedProject: Project = this.projectForm.value;
-      console.log(updatedProject)
-        this.userService.updateProject(this.projectId, updatedProject).subscribe((res:any) => {
-          console.log(res)
-          window.alert('Details are updated!');
-          this.router.navigate(['../'], { relativeTo: this.route }); // Redirect to previous projects page
-        });
+      console.log('Updating project with:', updatedProject);
+      this.userService.updateProject(this.projectId, updatedProject).subscribe(
+        (res: Project) => {
+          console.log('Project updated:', res);
+          this.project = res;
+          this.projectForm.patchValue(this.project);
+          if (window.confirm('Details are updated! Do you want to go back?')) {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          }
+        },
+        error => {
+          console.error('Error updating project', error);
+          window.alert('An error occurred while updating project details. Please try again later.');
+        }
+      );
+    } else {
+      console.log('Form is invalid');
     }
   }
+
   cancel(): void {
+    console.log('Cancel button clicked, navigating back');
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  scrollToTop(): void {window.scrollTo(0, 0);
+  scrollToTop(): void {
+    console.log('Scrolling to top');
+    window.scrollTo(0, 0);
   }
-
 }

@@ -1,27 +1,24 @@
-
 <div *ngIf="isLoading">Loading....</div>
 
 <div *ngIf="!isLoading" class="container mt-4">
-  <form class="edit-form" #editForm="ngForm" (submit)="updateProject(editForm.value)">
+  <form [formGroup]="projectForm" class="edit-form" (ngSubmit)="updateProject()">
     <div class="inp-row">
       <h2 class="title mb-3 text-center">Edit Project</h2>
 
       <div class="inp-field mb-3">
         <div class="inp">
           <label class="form-label">Project Name</label>
-          <input type="text" class="form-control" id="projectName" placeholder="Project name" ngModel name="projectName"
-                 #projectName="ngModel" required>
-          <div *ngIf="projectName.invalid && (projectName.dirty || projectName.touched)" class="error-message">
-            <span *ngIf="projectName.errors?.['required']">Project Name is required.</span>
+          <input type="text" class="form-control" formControlName="projectName" placeholder="Project name" required>
+          <div *ngIf="projectForm.get('projectName')?.invalid && (projectForm.get('projectName')?.dirty || projectForm.get('projectName')?.touched)" class="error-message">
+            <span *ngIf="projectForm.get('projectName')?.errors?.['required']">Project Name is required.</span>
           </div>
         </div>
 
         <div class="inp">
           <label class="form-label">Client</label>
-          <input type="text" class="form-control" id="client" placeholder="Client Name" ngModel name="client" required
-                 #client="ngModel">
-          <div *ngIf="client.invalid && (client.dirty || client.touched)" class="error-message">
-            <span *ngIf="client.errors?.['required']">Client Name is required.</span>
+          <input type="text" class="form-control" formControlName="client" placeholder="Client Name" required>
+          <div *ngIf="projectForm.get('client')?.invalid && (projectForm.get('client')?.dirty || projectForm.get('client')?.touched)" class="error-message">
+            <span *ngIf="projectForm.get('client')?.errors?.['required']">Client Name is required.</span>
           </div>
         </div>
       </div>
@@ -29,21 +26,17 @@
       <div class="inp-field mb-3">
         <div class="inp">
           <label class="form-label">Description</label>
-          <input type="text" class="form-control" id="description" placeholder="Description" ngModel
-                 name="description" required #description="ngModel">
-          <div *ngIf="description.invalid && (description.dirty || description.touched)"
-               class="error-message">
-            <span *ngIf="description.errors?.['required']">Description is required.</span>
+          <input type="text" class="form-control" formControlName="description" placeholder="Description" required>
+          <div *ngIf="projectForm.get('description')?.invalid && (projectForm.get('description')?.dirty || projectForm.get('description')?.touched)" class="error-message">
+            <span *ngIf="projectForm.get('description')?.errors?.['required']">Description is required.</span>
           </div>
         </div>
 
         <div class="inp">
           <label class="form-label">Teams</label>
-          <input type="text" class="form-control" id="teams" placeholder="Teams" ngModel
-                 name="teams" required #teams="ngModel">
-          <div *ngIf="teams.invalid && (teams.dirty || teams.touched)"
-               class="error-message">
-            <span *ngIf="teams.errors?.['required']">Teams are required.</span>
+          <input type="text" class="form-control" formControlName="teams" placeholder="Teams" required>
+          <div *ngIf="projectForm.get('teams')?.invalid && (projectForm.get('teams')?.dirty || projectForm.get('teams')?.touched)" class="error-message">
+            <span *ngIf="projectForm.get('teams')?.errors?.['required']">Teams are required.</span>
           </div>
         </div>
       </div>
@@ -51,21 +44,17 @@
       <div class="inp-field mb-3">
         <div class="inp">
           <label class="form-label">Managers</label>
-          <input type="text" class="form-control" id="managers" placeholder="Managers" ngModel
-                 name="managers" required #managers="ngModel">
-          <div *ngIf="managers.invalid && (managers.dirty || managers.touched)"
-               class="error-message">
-            <span *ngIf="managers.errors?.['required']">Managers are required.</span>
+          <input type="text" class="form-control" formControlName="managers" placeholder="Managers" required>
+          <div *ngIf="projectForm.get('managers')?.invalid && (projectForm.get('managers')?.dirty || projectForm.get('managers')?.touched)" class="error-message">
+            <span *ngIf="projectForm.get('managers')?.errors?.['required']">Managers are required.</span>
           </div>
         </div>
 
         <div class="inp">
           <label class="form-label">Status</label>
-          <input type="text" class="form-control" id="status" placeholder="Status" ngModel name="status"
-                 required #status="ngModel">
-          <div *ngIf="status.invalid && (status.dirty || status.touched)"
-               class="error-message">
-            <span *ngIf="status.errors?.['required']">Status is required.</span>
+          <input type="text" class="form-control" formControlName="status" placeholder="Status" required>
+          <div *ngIf="projectForm.get('status')?.invalid && (projectForm.get('status')?.dirty || projectForm.get('status')?.touched)" class="error-message">
+            <span *ngIf="projectForm.get('status')?.errors?.['required']">Status is required.</span>
           </div>
         </div>
       </div>
@@ -73,16 +62,12 @@
       <div class="inp-field mb-3">
         <div class="inp">
           <label class="form-label">Type</label>
-          <input type="text" class="form-control" id="type" placeholder="Type" ngModel name="type"
-                 required #type="ngModel">
-          <div *ngIf="type.invalid && (type.dirty || type.touched)"
-               class="error-message">
-            <span *ngIf="type.errors?.['required']">Type is required.</span>
+          <input type="text" class="form-control" formControlName="type" placeholder="Type" required>
+          <div *ngIf="projectForm.get('type')?.invalid && (projectForm.get('type')?.dirty || projectForm.get('type')?.touched)" class="error-message">
+            <span *ngIf="projectForm.get('type')?.errors?.['required']">Type is required.</span>
           </div>
         </div>
       </div>
-
-      <!-- Add more input fields here -->
 
       <div class="text-end suv-btn">
         <button class="btn btn-maroon" type="submit">Update</button>

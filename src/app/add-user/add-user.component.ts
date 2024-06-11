@@ -37,7 +37,7 @@ export class AddUserComponent implements OnInit {
   searchTerm: string = '';
   isLoggedIn! : User ;
   role : number = this.userService.getAuthUserId()
-  isLoading: boolean = false; 
+  isLoading: boolean = false;
   displayedColumns: string[] = [];
   dataSource: MatTableDataSource<User>;
   @ViewChild(MatSort) sort !: MatSort;
@@ -47,7 +47,7 @@ export class AddUserComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-   
+
   ) {
     this.dataSource = new MatTableDataSource<User>();
   }
@@ -56,29 +56,29 @@ export class AddUserComponent implements OnInit {
     this.isLoggedIn = this.userService.getAuthUserFromCache();
     this.displayColumns();
     this.loadUsers(this.resultPage);
-   
+
   }
 
    saveUser(userData: any) {
     this.userService.addUser(userData).subscribe(
       (response: any) => {
-       
-        this.successMessage = 'User added Successfully'; 
+
+        this.successMessage = 'User added Successfully';
 	 setTimeout(() => {
         this.successMessage = null;
         window.location.reload();
       }, 3000);
-        
+
       },
       (error: any) => {
         if (error.status == 400) {
-          this.errorMessage = 'An error occurred while adding the user'; 
+          this.errorMessage = 'An error occurred while adding the user';
 	 setTimeout(() => {
         this.successMessage = null;
       }, 3000);
 
         } else {
-          this.errorMessage = 'An error occurred while adding the user'; 
+          this.errorMessage = 'An error occurred while adding the user';
 	 setTimeout(() => {
         this.successMessage = null;
       }, 3000);
@@ -144,16 +144,16 @@ export class AddUserComponent implements OnInit {
       if (result) {
         this.userService.deleteUser(uId).subscribe(
           (response: any) => {
-            this.successMessage = 'User deleted Successfully'; 
+            this.successMessage = 'User deleted Successfully';
 	 setTimeout(() => {
         this.errorMessage = null;
         window.location.reload();
       }, 3000);
 
-            
+
           },
           (error: any) => {
-            this.errorMessage = 'Could not delete user'; 
+            this.errorMessage = 'Could not delete user';
 	 setTimeout(() => {
         this.errorMessage = null;
       }, 3000);
@@ -165,7 +165,7 @@ export class AddUserComponent implements OnInit {
   }
 
 
-  
+
   dismissSuccessMessage() {
     this.successMessage = null;
 }
@@ -182,18 +182,18 @@ dismissErrorMessage() {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'success') {
-     this.successMessage = 'User updated Successfully'; 
+     this.successMessage = 'User updated Successfully';
      setTimeout(() => {
            window.location.reload();
      }, 1500);
-     
+
       } else if (result == 'failure') {
         this.errorMessage = 'Could not update user';
       }
     });
   }
 
-  // 
+  //
 preventManualInput(event: KeyboardEvent) {
     event.preventDefault();
 }
@@ -208,8 +208,6 @@ preventManualInput(event: KeyboardEvent) {
     const value = (data.target as HTMLInputElement).value;
     this.dataSource.filter = value
   }
-
-
 
     displayColumns () {
       if(this.isLoggedIn.role == 'ROLE_USER') {

@@ -22,7 +22,7 @@ onNoClick() : void {
 onYesClick() : void {
   this.dialogRef.close(true)
 }
- 
+
 
 
 }
