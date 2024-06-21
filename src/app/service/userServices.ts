@@ -139,8 +139,6 @@ export class UserService {
   }
 
 
-
-
   deleteLeave(leaveId: number) {
     return this.http.post<String>(BASE_API_URL + `/leave/delete/` + leaveId, leaveId, { headers: this.getHeaders() });
   }
@@ -208,7 +206,7 @@ export class UserService {
 
 
   deleteProject(projectId: number): Observable<any> {
-    return this.http.delete(BASE_API_URL + `/project/delete/${projectId}`);
+    return this.http.delete(BASE_API_URL + `/project/delete/${projectId}`,{headers : this.getHeaders()});
   }
 }
 

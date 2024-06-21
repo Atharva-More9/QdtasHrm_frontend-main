@@ -184,6 +184,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     if (confirm('Are you sure you want to delete this project?')) {
       this.userService.deleteProject(projectId).subscribe(
         () => {
+          console.log('delefkagsdaushd');
           this.successMessage = 'Project deleted Successfully';
           setTimeout(() => {
             this.successMessage = null;

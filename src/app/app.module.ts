@@ -44,6 +44,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { TeamDetailsComponent } from './team-details/team-details.component';
 import { ManagerDetailsComponent } from './manager-details/manager-details.component';
 import { EditProjectComponent } from './edit-project/edit-project.component';
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -93,12 +94,12 @@ import { EditProjectComponent } from './edit-project/edit-project.component';
     MatSelectModule,
     ReactiveFormsModule,
     NgMultiSelectDropDownModule.forRoot()
-  
+
 
 
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
- 
+
 })
 export class AppModule { }
