@@ -57,7 +57,7 @@ export class AddUserComponent implements OnInit, AfterViewInit {
   saveUser(userData: any) {
 
     const token = localStorage.getItem('token');
-    console.log('Token:', token);  // Check token value
+    console.log('Token:');  // Check token value
 
     this.userService.addUser(userData).subscribe(
       (response: any) => {
