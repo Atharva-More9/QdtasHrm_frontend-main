@@ -152,11 +152,11 @@
                             <select class="form-select" ngModel name="deptId" placeholder="Select Department" required
                                 #deptId="ngModel" [ngClass]="{'invalid': deptId.invalid && (deptId.dirty || deptId.touched), 'valid': deptId.valid && (deptId.dirty ||
                                 deptId.touched)}">
-                                <option selected [disabled]="true">Select Department</option>
-                                <option value=1>DEVELOPER</option>
-                                <option value=2>QA</option>
-                                <option value=3>HR</option>
-                                <option value=4>Finance</option>
+                              <option selected [disabled]="true">Select Department</option>
+                              <option value=1>DEVELOPER</option>
+                              <option value=2>QA</option>
+                              <option value=3>HR</option>
+                              <option value=4>Finance</option>
                             </select>
                             <div *ngIf="deptId.invalid && (deptId.dirty || deptId.touched)" class="error-message">
                                 <span *ngIf="deptId.errors?.['required']">Please select department</span>
